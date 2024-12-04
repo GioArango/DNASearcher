@@ -1,12 +1,16 @@
-import express from "express"
+import { config } from "./config/index.js";
+import { AppRoutes } from "./routers/index.js";
+import { Server } from "./server.js";
 
-const app = express()
-const PORT = process.env.PORT || 3000
+(async () => {
+    main();
+})();
 
-app.get('/', (req, res) => {
-    res.send('Welcome!')
-})
+function main() {
+    const app = new Server({
+        port: config.PORT,
+        routes: AppRoutes.routes
+    });
 
-app.listen(PORT, () => {
-    console.log(`Server listening on PORT ${PORT}`)
-})
+    app.start()
+}
