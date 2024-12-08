@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { MutantController } from "../../controllers/mutants/controller.js";
 import { MutantServices } from "../../services/mutants/services.js";
+import { validations } from "../../middlewares/validations.js";
 
 class MutantsRoutes {
 
@@ -10,7 +11,7 @@ class MutantsRoutes {
         const mutantServices = new MutantServices()
         const mutantController = new MutantController(mutantServices) 
 
-        router.post("/mutant", mutantController.searchMutant)
+        router.post("/mutant", validations, mutantController.searchMutant)
 
         return router
     }
