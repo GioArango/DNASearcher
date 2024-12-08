@@ -1,37 +1,37 @@
 export class MutantServices {
 
-    searchHorizontal(matrix, size, sequenceLength) {
+    searchHorizontal(matrix, sequenceLength) {
         let countSequences = 0;
-
-        for (let row = 0; row < size; row++) {
+    
+        for (let row = 0; row < matrix.length; row++) {
             let consecutive = 1;
-            for (let col = 1; col < size; col++) {
+            for (let col = 1; col < matrix[0].length; col++) {
                 if (matrix[row][col] === matrix[row][col - 1]) {
                     consecutive++;
                     if (consecutive === sequenceLength) {
                         countSequences++;
-                        break; // Parar en esta fila si encontramos una secuencia
+                        break;
                     }
                 } else {
                     consecutive = 1;
                 }
             }
         }
-
+    
         return countSequences;
-    }
+    }    
 
-    searchVertical(matrix, size, sequenceLength) {
+    searchVertical(matrix, sequenceLength) {
         let countSequences = 0;
     
-        for (let col = 0; col < size; col++) {
+        for (let col = 0; col < matrix[0].length; col++) {
             let consecutive = 1;
-            for (let row = 1; row < size; row++) {
+            for (let row = 1; row < matrix.length; row++) {
                 if (matrix[row][col] === matrix[row - 1][col]) {
                     consecutive++;
                     if (consecutive === sequenceLength) {
                         countSequences++;
-                        break; // Parar en esta columna si encontramos una secuencia
+                        break;
                     }
                 } else {
                     consecutive = 1;
@@ -40,31 +40,62 @@ export class MutantServices {
         }
     
         return countSequences;
-    }
+    }  
 
-    searchDiagonals(matrix, size, sequenceLength) {
+    searchMainDiagonals(matrix, sequenceLength) {
         let countSequences = 0;
     
-        for (let row = 0; row <= size - sequenceLength; row++) {
-            for (let col = 0; col <= size - sequenceLength; col++) {
-                // Diagonal principal
+        for (let row = 0; row <= matrix.length - sequenceLength; row++) {
+            for (let col = 0; col <= matrix[0].length - sequenceLength; col++) {
                 let consecutiveMain = 1;
-                // Diagonal secundaria
-                let consecutiveSecondary = 1;
-    
                 for (let step = 1; step < sequenceLength; step++) {
-                    // Verificar diagonal principal
                     if (matrix[row + step][col + step] === matrix[row + step - 1][col + step - 1]) {
                         consecutiveMain++;
-                    }
-                    // Verificar diagonal secundaria
-                    if (matrix[row + step][col + sequenceLength - step - 1] === matrix[row + step - 1][col + sequenceLength - step]) {
-                        consecutiveSecondary++;
+                    } else {
+                        break;
                     }
                 }
-    
                 if (consecutiveMain === sequenceLength) countSequences++;
-                if (consecutiveSecondary === sequenceLength) countSequences++;
+            }
+        }
+    
+        return countSequences;
+    }
+    
+    searchInvertedDiagonals(matrix, sequenceLength) {
+        let countSequences = 0;
+    
+        for (let row = 0; row <= matrix.length - sequenceLength; row++) {
+            for (let col = sequenceLength - 1; col < matrix[0].length; col++) {
+                let consecutive = 1;
+                for (let step = 1; step < sequenceLength; step++) {
+                    if (matrix[row + step][col - step] === matrix[row + step - 1][col - step + 1]) {
+                        consecutive++;
+                    } else {
+                        break;
+                    }
+                }
+                if (consecutive === sequenceLength) countSequences++;
+            }
+        }
+    
+        return countSequences;
+    }    
+
+    searchInvertedDiagonals(matrix, sequenceLength) {
+        let countSequences = 0;
+    
+        for (let row = 0; row <= matrix.length - sequenceLength; row++) {
+            for (let col = sequenceLength - 1; col < matrix[0].length; col++) {
+                let consecutive = 1;
+                for (let step = 1; step < sequenceLength; step++) {
+                    if (matrix[row + step][col - step] === matrix[row + step - 1][col - step + 1]) {
+                        consecutive++;
+                    } else {
+                        break;
+                    }
+                }
+                if (consecutive === sequenceLength) countSequences++;
             }
         }
     
