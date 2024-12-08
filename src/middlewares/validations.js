@@ -9,15 +9,11 @@ const validations = (req, res, next) => {
     try {
         const { dna } = req.body;
 
-        console.log (dna)
-
         if( !dna || dna.length === 0) {
-            console.log("1")
             return handleError()
         }
         
         if (!Array.isArray(dna)) {
-            console.log("2")
             return handleError()
         }
         
@@ -28,13 +24,11 @@ const validations = (req, res, next) => {
         
         const matrix = buildMatrix(dna);
         if (matrix.some(row => row.length < config.SEQUENCE)) {
-            console.log("4")
             return handleError()
         }
 
         const allRowsHaveSameLength = matrix.every(row => row.length === matrix[0].length);
         if (!allRowsHaveSameLength) {
-            console.log("5")
             return handleError()
         }
         
