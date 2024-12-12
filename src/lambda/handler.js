@@ -8,7 +8,8 @@ export const handler = async (event) => {
         const mutantService = new MutantServices();
         const mutantController = new MutantController(mutantService);
 
-        const { dna } = event
+        const body = JSON.parse(event.body);
+        const { dna } = body;
 
         const result = await mutantController.searchMutant(dna);
 
